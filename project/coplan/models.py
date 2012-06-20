@@ -8,12 +8,12 @@ class Plan (models.Model):
     title = models.CharField(max_length=100)
     motivation = models.CharField(max_length=140)
     details = models.TextField()
-    owner = models.ForeignKey('auth.User')
+    owner = models.ForeignKey('auth.User', related_name='owned_plans')
     
     location_lat = models.FloatField()
     location_lon = models.FloatField()
 
-    supporters = models.ManyToManyField('auth.User')
+    supporters = models.ManyToManyField('auth.User', related_name='supported_plans')
 
 
 class Link (models.Model):
@@ -21,9 +21,9 @@ class Link (models.Model):
     url = models.URLField()
 
 
-class Image (models.Model):
-    plan = models.ForeignKey('coplan.Plan', related_name='images')
-    data = models.ImageField()
+# class Image (models.Model):
+#     plan = models.ForeignKey('coplan.Plan', related_name='images')
+#     data = models.ImageField()
 
 
 class Video (models.Model):
