@@ -5,13 +5,13 @@ class Plan (models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     updated_datetime = models.DateTimeField(auto_now=True)
     
-    title = models.CharField(max_length=100)
-    motivation = models.CharField(max_length=140)
-    details = models.TextField()
+    title = models.CharField(max_length=100, null=True, blank=True)
+    motivation = models.CharField(max_length=140, null=True, blank=True)
+    details = models.TextField(null=True, blank=True)
     owner = models.ForeignKey('auth.User', related_name='owned_plans')
     
-    location_lat = models.FloatField()
-    location_lon = models.FloatField()
+    location_lat = models.FloatField(null=True, blank=True)
+    location_lon = models.FloatField(null=True, blank=True)
 
     supporters = models.ManyToManyField('auth.User', related_name='supported_plans')
 
