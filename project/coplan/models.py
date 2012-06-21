@@ -13,7 +13,9 @@ class Plan (models.Model):
     location_lat = models.FloatField(null=True, blank=True)
     location_lon = models.FloatField(null=True, blank=True)
 
-    supporters = models.ManyToManyField('auth.User', related_name='supported_plans')
+    supporters = models.ManyToManyField('auth.User', 
+                                        related_name='supported_plans',
+                                        blank=True)
 
 
 class Link (models.Model):

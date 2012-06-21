@@ -1,12 +1,35 @@
 {% extends "base.html" %}
+{% load url from future %}
+
+{% block head_includes %}
+{% endblock %}
 
 {% block content %}
 
-<form action="#">
-  Title: <input name="title" id="id_title"><br>
-  Motivation: <textarea name="motivation" id="id_motivation"></textarea><br>
-  Details: <textarea name="details" id="id_details"></textarea><br>
+<form action="#" id="id_plan-form">
+  Title: <input name="title" id="id_title" value="{{ plan.title }}"><br>
+  Motivation: <textarea name="motivation" id="id_motivation">{{ plan.motivation }}</textarea><br>
+  Details: <textarea name="details" id="id_details">{{ plan.details }}</textarea><br>
 </form>
+
+<script>
+  {% if plan_data %}
+  var planData = {{ plan_data|safe }};
+  {% else %}
+  var planData = {owner: {{ user.pk|default:"1" }} };
+  {% endif %}
+
+  var Coplan = Coplan || {};
+  Coplan.planUrlRoot = '{% url "plan_list" %}';
+</script>
+
+<script src="{{ STATIC_URL }}js/models.js"></script>
+<script src="{{ STATIC_URL }}js/views.js"></script>
+
+<script>
+  var plan = new Coplan.Plan(planData);
+  var planView = new Coplan.PlanView({model: plan});
+</script>
 
 {% endblock %}
 
