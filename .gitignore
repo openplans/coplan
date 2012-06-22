@@ -35,3 +35,4 @@ dist
 file:/
 TAGS
 *.db
+settings_local.py
