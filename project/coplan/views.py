@@ -1,4 +1,5 @@
 import json
+from django.contrib.auth.decorators import login_required
 from django.core.serializers.json import DateTimeAwareJSONEncoder
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -9,7 +10,7 @@ def homepage(request):
     context = RequestContext(request, {})
     return render_to_response('index.html', context_instance=context)
 
-
+@login_required
 def new_plan(request):
     context = RequestContext(request, {
         })

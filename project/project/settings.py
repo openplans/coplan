@@ -124,9 +124,37 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 
     'djangorestframework',
-    
+    'social_auth',
     'coplan',
+    'project',  # just templates for now?
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.request",
+)
+
+#################################################################
+# Django-social-auth config
+#################################################################
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    )
+
+
+LOGIN_URL          = '/login-form/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_ERROR_URL    = '/login-error/'
+
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -156,3 +184,12 @@ LOGGING = {
         },
     }
 }
+
+###############################################################################
+# Local settings go last.
+import os
+LOCAL_SETTINGS_FILE = os.path.join(os.path.dirname(__file__), 'settings_local.py')
+if os.path.exists(LOCAL_SETTINGS_FILE):
+    execfile(LOCAL_SETTINGS_FILE)
+
+        
