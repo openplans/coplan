@@ -6,11 +6,20 @@
 
 {% block content %}
 
-<form action="#" id="id_plan-form">
-  Title: <input name="title" id="id_title" value="{{ plan.title }}"><br>
-  Motivation: <textarea name="motivation" id="id_motivation">{{ plan.motivation }}</textarea><br>
-  Details: <textarea name="details" id="id_details">{{ plan.details }}</textarea><br>
-</form>
+<div id="id_plan-form">
+  <div class="field">
+    <input name="title" id="id_title" value="{{ plan.title }}" placeholder="Plan Title">
+  </div>
+  <div class="field-wrapper">
+    <p><a href="#">{{ user.username }}</a> made this plan because:</p>
+    <div class="field">
+      <textarea name="motivation" id="id_motivation" placeholder="Why this plan is important to me...">{{ plan.motivation }}</textarea>
+    </div>
+  </div>
+  <div class="field">
+    <textarea name="details" id="id_details" placeholder="The plan details...">{{ plan.details }}</textarea>
+  </div>
+</div>
 
 <script>
   {% if plan_data %}
