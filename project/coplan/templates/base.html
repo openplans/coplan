@@ -46,7 +46,7 @@
           <nav id="user-menu" role="article">
             <ul>
 	      {% if user.is_authenticated %}
-              <li>Hi, {{ user.username }}. <a href="#" class="logout">Sign Out</a></li>
+              <li>Hi, {{ user.username }}. <a href="{% url logout %}?next={{ request.build_absolute_uri }}" class="logout">Sign Out</a></li>
               <li><a href="#">My Plans</a></li>
 	      {% endif %}
             </ul>
