@@ -259,47 +259,48 @@ a.show-more:hover {
   vertical-align: top;
 }
 
-.plan-description input,
-.plan-description textarea,
-.plan-description .field > div {
+#plan-description input,
+#plan-description textarea,
+#plan-description .field > div {
   border: none;
   padding: 10px;
   width: 100%;
 }
 
-.plan-description input:hover,
-.plan-description textarea:hover {
+#plan-description input:hover,
+#plan-description textarea:hover {
   background-color: #eee;
 }
 
-.plan-description input:focus,
-.plan-description textarea:focus {
+#plan-description input:focus,
+#plan-description textarea:focus {
   background-color: #ccc;
   border: 1px solid #aaa;
   padding: 9px;
 }
 
-.plan-description #id_motivation {
+#plan-description #id_motivation {
   margin-left: 9px;
   padding-left: 1px;
   padding-top: 1px;
 }
 
-.plan-description #id_motivation:focus {
+#plan-description #id_motivation:focus {
   padding-left: 0px;
   padding-top: 0px;
 }
 
 #id_details {
-  height: 25em;
+  height: 28em;
+  line-height: 1.75em;
 }
 
-.plan-description #id_title {
+#plan-description #id_title {
   font-size: 2em;
   font-weight: bold;
 }
 
-.plan-description .field .plan-motivation-label {
+#plan-description .field .plan-motivation-label {
   color: #888;
   padding: 0px 0px 0px 10px;
 }
@@ -390,7 +391,7 @@ a.show-more:hover {
 }
 
 @media only screen and (min-width: 768px) {
-  .plan-description,
+  #plan-description,
   #discussion,
   #support {
     float: left;
