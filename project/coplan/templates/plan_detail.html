@@ -6,19 +6,53 @@
 
 {% block content %}
 
-<div id="id_plan-form">
-  <div class="field">
-    <input name="title" id="id_title" value="{{ plan.title }}" placeholder="Plan Title">
-  </div>
-  <div class="field-wrapper">
-    <p><a href="#">{{ user.username }}</a> made this plan because:</p>
-    <div class="field">
-      <textarea name="motivation" id="id_motivation" placeholder="Why this plan is important to me...">{{ plan.motivation }}</textarea>
+<div class="plan-description">
+
+  <div id="id_plan-form">
+
+    <div class="plan-overview">
+      <div class="field plan-title">
+	{% if not plan.id or user == plan.owner %}
+	<input name="title" id="id_title" value="{{ plan.title }}" 
+	       placeholder="Plan Title">
+	{% else %}
+	<div id="id_title">{{ plan.title }}</div>
+	{% endif %}
+      </div> <!-- plan-title -->
+
+      <div class="plan-sub-overview">
+	<div class="plan-owner">
+	  <img class="avatar" src="http://placehold.it/40" />
+	</div> <!-- plan-owner -->
+	
+	<div class="field plan-motivation">
+	  <div class="plan-motivation-label">
+	    <a href="#">{{ plan.owner.username }}</a> made this plan because:
+	  </div>
+	  {% if not plan.id or user == plan.owner %}
+	  <textarea name="motivation" id="id_motivation" 
+		    placeholder="Why this plan is important to me...">{{ plan.motivation }}</textarea>
+	  {% else %}
+	  <div id="id_motivation">{{ plan.motivation }}</div>
+	{% endif %}
+	</div> <!-- plan-motivation -->
+      </div>
+
     </div>
+
+    <div class="field plan-details">
+      <h2>Plan Details</h2>
+
+      {% if not plan.id or user == plan.owner %}
+      <textarea name="details" id="id_details" 
+		placeholder="The plan details...">{{ plan.details }}</textarea>
+      {% else %}
+      <div id="id_details">{{ plan.details }}</div>
+      {% endif %}
+    </div>
+
   </div>
-  <div class="field">
-    <textarea name="details" id="id_details" placeholder="The plan details...">{{ plan.details }}</textarea>
-  </div>
+
 </div>
 
 <script>

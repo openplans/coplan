@@ -233,9 +233,80 @@ a.show-more:hover {
 /* =Plan Description
 -------------------------------------------------------------- */
 
-#plan-description {
+.plan-overview {
   border-bottom: 1px solid #bbb;
   padding-bottom: 1em;
+}
+
+.plan-title {
+  width: 100%;
+}
+
+.plan-sub-overview {
+  display: table;
+  width: 100%;
+}
+
+.plan-owner {
+  display: table-cell;
+  padding-left: 10px;
+  vertical-align: top;
+  width: 40px;
+}
+
+.plan-motivation {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.plan-description input,
+.plan-description textarea,
+.plan-description .field > div {
+  border: none;
+  padding: 10px;
+  width: 100%;
+}
+
+.plan-description input:hover,
+.plan-description textarea:hover {
+  background-color: #eee;
+}
+
+.plan-description input:focus,
+.plan-description textarea:focus {
+  background-color: #ccc;
+  border: 1px solid #aaa;
+  padding: 9px;
+}
+
+.plan-description #id_motivation {
+  margin-left: 9px;
+  padding-left: 1px;
+  padding-top: 1px;
+}
+
+.plan-description #id_motivation:focus {
+  padding-left: 0px;
+  padding-top: 0px;
+}
+
+#id_details {
+  height: 25em;
+}
+
+.plan-description #id_title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.plan-description .field .plan-motivation-label {
+  color: #888;
+  padding: 0px 0px 0px 10px;
+}
+
+.plan-details h2 {
+  margin-top: 10px;
+  padding-left: 10px;
 }
 
 /* =Plan Info
@@ -319,7 +390,7 @@ a.show-more:hover {
 }
 
 @media only screen and (min-width: 768px) {
-  #plan-description,
+  .plan-description,
   #discussion,
   #support {
     float: left;
