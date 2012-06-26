@@ -31,3 +31,14 @@ class Link (models.Model):
 class Video (models.Model):
     plan = models.ForeignKey('coplan.Plan', related_name='videos')
     url = models.URLField()
+
+class Comment (models.Model):
+    TYPE_CHOICES = (
+        (1, 'Support'),
+        (-1, 'Oppose'),
+        (0, 'Question'))
+    
+    plan = models.ForeignKey('coplan.Plan', related_name='comments')
+    commenter = models.ForeignKey('auth.User', related_name='comments')
+    text = models.TextField()
+    type = models.IntegerField(choices=TYPE_CHOICES)

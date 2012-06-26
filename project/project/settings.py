@@ -125,6 +125,7 @@ INSTALLED_APPS = (
 
     'djangorestframework',
     'social_auth',
+    'south',
     'coplan',
     'project',  # just templates for now?
 )
