@@ -42,3 +42,4 @@ class Comment (models.Model):
     commenter = models.ForeignKey('auth.User', related_name='comments')
     text = models.TextField()
     type = models.IntegerField(choices=TYPE_CHOICES)
+    created_datetime = models.DateTimeField(auto_now_add=True)
