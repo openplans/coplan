@@ -367,8 +367,43 @@ a.show-more:hover {
   padding-bottom: 1em;
 }
 .comments-list {
+  display: table;
   list-style: none;
   margin: 0;
+  width: 100%;
+}
+
+.comments-list li {
+  display: table-row;
+}
+
+.comment-commenter {
+  display: table-cell;
+  vertical-align: top;
+  width: 40px;
+}
+
+.comment-content {
+  display: table-cell;
+  vertical-align: top;
+  padding-left: 10px;
+}
+
+.comment-content textarea {
+  border: none;
+  margin-top: 5px;
+  padding: 1px;
+  width: 100%;
+}
+
+.comment-content textarea:hover {
+  background-color: #eee;
+}
+
+.comment-content textarea:focus {
+  background-color: #ccc;
+  border: 1px solid #aaa;
+  padding: 0px;
 }
 
 

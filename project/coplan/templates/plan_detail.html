@@ -62,11 +62,37 @@
   <h3>Supporting Documents</h3>
 </div>
 
+<div id="discussion">
+  <h3>Discussion</h3>
+  <ol class="comments-list">
+    <li>
+      <div class="comment-commenter">
+	<img class="avatar" src="http://placehold.it/40" />
+      </div>
+      <div class="comment-content">
+	<div class="comment-overview">
+	  <a href="#">{{ user.username }}</a>
+	  <select id="id_comment-type">
+	    <option value="1">likes</option>
+	    <option value="-1">dislikes</option>
+	    <option value="0">has a question about</option>
+	  </select>
+	  this plan
+	</div>
+
+	<div class="comment-text">
+	  <textarea id="id_comment-text" placeholder="What do you think..."></textarea>
+	</div>
+      </div>
+    </li>
+  </ol>
+</div>
+
 <script>
   {% if plan_data %}
   var planData = {{ plan_data|safe }};
   {% else %}
-  var planData = {owner: {{ user.pk|default:"1" }} };
+  var planData = {owner: {{ user.pk|default:"-1" }} };
   {% endif %}
 
   var Coplan = Coplan || {};
