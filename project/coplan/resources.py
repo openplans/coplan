@@ -9,9 +9,11 @@ class PlanCommentResource (resources.ModelResource):
     exclude = ['plan']
 
     def commenter(self, comment):
-        return comment.commenter.pk
+        return {'id': comment.commenter.pk,
+                'name': comment.commenter.username,
+                }
 
-    
+
 class PlanResource (resources.ModelResource):
     model = models.Plan
 

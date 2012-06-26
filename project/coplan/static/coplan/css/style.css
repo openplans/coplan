@@ -160,6 +160,10 @@ button {width: auto; overflow: visible;}
   margin-bottom: 2em;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* Images */
 img { max-width: 100%;}
 
@@ -392,8 +396,9 @@ a.show-more:hover {
 .comment-content textarea {
   border: none;
   margin-top: 5px;
-  padding: 1px;
+  padding: 0px;
   width: 100%;
+  border: 1px solid #aaa;
 }
 
 .comment-content textarea:hover {
@@ -402,9 +407,9 @@ a.show-more:hover {
 
 .comment-content textarea:focus {
   background-color: #ccc;
-  border: 1px solid #aaa;
   padding: 0px;
 }
+
 
 
 /* =Support

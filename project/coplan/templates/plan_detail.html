@@ -65,7 +65,23 @@
 <div id="discussion">
   <h3>Discussion</h3>
   <ol class="comments-list">
-    <li>
+    <li class="comment like hidden" id="comment-template">
+      <header>
+      	<div class="comment-author vcard">
+          <img class="avatar" src="http://placehold.it/40" />
+      	  <a href="#" rel="author">Andy Cochran</a> <span class="comment-type">likes</span> this plan.
+        </div><!-- .comment-author .vcard -->
+      	<div class="comment-meta">
+      	  <a href="#comment-1"><time pubdate="" datetime="2007-09-04T10:15:32+00:00">September 4, 2007 at 10:15 am</time></a>
+    	</div><!-- .comment-meta -->
+      </header>
+      <div class="comment-body">
+      	<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="comments-list">
       <div class="comment-commenter">
 	<img class="avatar" src="http://placehold.it/40" />
       </div>
@@ -83,9 +99,12 @@
 	<div class="comment-text">
 	  <textarea id="id_comment-text" placeholder="What do you think..."></textarea>
 	</div>
+
+	<div class="comment-submit">
+	  <button id="id_comment-submit">Submit</button>
+	</div>
       </div>
-    </li>
-  </ol>
+  </div>
 </div>
 
 <script>
