@@ -1,22 +1,38 @@
 from djangorestframework import views, permissions, status, mixins
 from djangorestframework.response import ErrorResponse
+from . import models
 from . import resources
 
 
-class IsOwnerOrReadOnly (permissions.BasePermission):
+class IsInstanceUserOrReadOnly (permissions.BasePermission):
+    model = None
+    user_attr = None
+    
     def check_permission(self, user):
-        from .models import Plan
         view = self.view
         
         try:
-            plan = view.get_instance()
-            if view.method not in ('GET', 'HEAD') and plan.owner != user:
-                raise ErrorResponse(status.HTTP_403_FORBIDDEN,
-                                    {'detail': ('Only the owner of a plan may '
-                                                'make modifications.')})
+            inst = view.get_instance()
+            if view.method not in ('GET', 'HEAD') and \
+              getattr(inst, self.user_attr) != user:
+                raise ErrorResponse(
+                    status.HTTP_403_FORBIDDEN,
+                    {'detail': ('Only the {0} of a {1} may make '
+                    'modifications.').format(self.user_attr,
+                                             self.model._meta.verbose_name)})
 
-        except Plan.DoesNotExist:
+        except self.model.DoesNotExist:
             raise ErrorResponse(status.HTTP_404_NOT_FOUND)
+
+
+class IsOwnerOrReadOnly (IsInstanceUserOrReadOnly):
+    model = models.Plan
+    user_attr = 'owner'
+
+
+class IsCommenterOrReadOnly (IsInstanceUserOrReadOnly):
+    model = models.Comment
+    user_attr = 'commenter'
 
 
 class ModelInstanceMixin (mixins.ModelMixin):
@@ -39,3 +55,10 @@ class PlanListView (views.ListOrCreateModelView):
 class PlanInstanceView (ModelInstanceMixin, views.InstanceModelView):
     resource = resources.PlanResource
     permissions = [IsOwnerOrReadOnly]
+
+class PlanCommentListView (views.ListOrCreateModelView):
+    resource = resources.PlanCommentResource
+
+class PlanCommentInstanceView (ModelInstanceMixin, views.InstanceModelView):
+    resource = resources.PlanCommentResource
+    permissions = [IsCommenterOrReadOnly]
