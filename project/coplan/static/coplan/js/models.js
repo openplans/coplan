@@ -6,14 +6,26 @@ var Coplan = Coplan || {};
 	 {
 	     urlRoot: C.planUrlRoot,
 	     sync: function(method, plan, options) {
-		 // Do not try to update the created_datetime and 
-		 // updated_datetime; these are going to be taken care of
-		 // automatically by Django.
-		 if (method == 'update') {
-		     plan.unset('created_datetime');
-		     plan.unset('updated_datetime');
-		     delete plan.attributes['url'];
-		     delete plan.attributes['id'];
+		 if (method == 'update' || method == 'create') {
+		     var data = plan.attributes;
+		     options.contentType = 'application/json';
+
+		     // Do not try to update the created_datetime and 
+		     // updated_datetime; these are going to be taken care of
+		     // automatically by Django.
+		     delete data['created_datetime'];
+		     delete data['updated_datetime'];
+
+		     // The id and url will never change, at least not by
+		     // any happening on the client.
+		     delete data['url'];
+		     delete data['id'];
+
+		     // Comments will be added and updated individually
+		     // through their own model.
+		     delete data['comments'];
+
+		     options.data = JSON.stringify(data);
 		 }
 
 		 return Backbone.sync(method, plan, options);
