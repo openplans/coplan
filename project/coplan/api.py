@@ -27,6 +27,13 @@ class PlanInstanceView (ModelInstanceMixin, views.InstanceModelView):
 class PlanCommentListView (views.ListOrCreateModelView):
     resource = resources.PlanCommentResource
 
+    def get_instance_data(self, model, content, **kwargs):
+        """Get the commenting user as the one that is logged in."""
+        data = super(PlanCommentListView, self)\
+          .get_instance_data(model, content, **kwargs)
+        data['commenter_id'] = self.request.user.pk
+        return data
+
 class PlanCommentInstanceView (ModelInstanceMixin, views.InstanceModelView):
     resource = resources.PlanCommentResource
     permissions = [permissions.IsCommenterOrReadOnly]
