@@ -46,19 +46,30 @@ var Coplan = Coplan || {};
 		 };
 		 this.collection.forEach(
 		     function (comment) {
+			 /* Clone the comment "template" element, and manually
+			  * fill in the value.
+			  * 
+			  * TODO: This would be much cleaner with a js template.
+			  * Underscore templates are available, but I like mustache
+			  * or handlebars better.
+			  */
 			 var $commentEl = $('#comment-template').clone();
 			 $commentEl.attr('id', 'comment-' + comment.get('id'));
 			 $commentEl.find('.comment-meta a')
 			     .attr('href', '#comment-' + comment.get('id'));
 			 $commentEl.find('.comment-author a')
 			     .html(comment.get('commenter')['name']);
-			 $commentEl.find('.comment-body p').html(comment.get('text'));
-			 $commentEl.find('.comment-type').html(commentTypes[comment.get('type')]);
-			 $commentEl.find('time').html(comment.get('created_datetime'));
-			 $commentEl.find('time').attr('datetime', comment.get('created_datetime'));
+			 $commentEl.find('.comment-body p')
+			     .html(comment.get('text'));
+			 $commentEl.find('.comment-type')
+			     .html(commentTypes[comment.get('type')]);
+			 $commentEl.find('time')
+			     .html(comment.get('created_datetime'));
+			 $commentEl.find('time')
+			     .attr('datetime', comment.get('created_datetime'));
 			 $commentEl.removeClass('hidden');
 			 $('ol.comments-list').append($commentEl);
-			 }
+		     }
 		 );
 	     }
 	 });
