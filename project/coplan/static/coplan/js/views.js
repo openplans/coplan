@@ -40,6 +40,7 @@ var Coplan = Coplan || {};
 
 	     events: {
 		 'click #id_comment-submit': 'onSubmitNewComment',
+		 'keyup #id_comment-text': 'onCommentTextChange',
 		 'change #id_comment-text': 'onCommentTextChange'
 	     },
 
@@ -59,9 +60,17 @@ var Coplan = Coplan || {};
 			 type: $('#id_comment-type option:selected').val()
 		     }, 
 
-		     // Wait for success from the server; we need a full comment
-		     // instance before we render.
-		     {wait: true});
+		     {
+			 // Wait for success from the server; we need a full 
+			 // comment instance before we render.
+			 wait: true,
+			 success: this.clearCommentFields
+		     });
+	     },
+
+	     clearCommentFields: function() {
+		 $('#id_comment-text').val('').change();
+		 $('#id_comment-type option:selected').removeAttr('selected');
 	     },
 
 	     addComment: function(comment) {
