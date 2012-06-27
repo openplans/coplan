@@ -27,7 +27,7 @@
 	
 	<div class="field plan-motivation">
 	  <div class="plan-motivation-label">
-	    <a href="#">{{ plan.owner.username }}</a> made this plan because:
+	    <a href="{% url 'user_profile' plan.owner.pk %}">{{ plan.owner.username }}</a> made this plan because:
 	  </div>
 	  {% if not plan.id or user == plan.owner %}
 	  <textarea name="motivation" id="id_motivation" 
@@ -87,7 +87,7 @@
       </div>
       <div class="comment-content">
 	<div class="comment-overview">
-	  <a href="#">{{ user.username }}</a>
+	  <a href="{% url 'user_profile' user.pk %}">{{ user.username }}</a>
 	  <select id="id_comment-type">
 	    <option value="1">likes</option>
 	    <option value="-1">dislikes</option>

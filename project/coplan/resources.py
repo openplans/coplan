@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from djangorestframework import resources
 from . import forms
 from . import models
@@ -11,6 +12,8 @@ class PlanCommentResource (resources.ModelResource):
     def commenter(self, comment):
         return {'id': comment.commenter.pk,
                 'name': comment.commenter.username,
+                'profile_url': reverse('user_profile', 
+                                       args=(comment.commenter.pk,)),
                 }
 
 

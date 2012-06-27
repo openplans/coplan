@@ -92,7 +92,8 @@ var Coplan = Coplan || {};
 		 $commentEl.find('.comment-meta a')
 		     .attr('href', '#comment-' + comment.get('id'));
 		 $commentEl.find('.comment-author a')
-		     .html(comment.get('commenter')['name']);
+		     .html(comment.get('commenter')['name'])
+		     .attr('href', comment.get('commenter')['profile_url']);
 		 $commentEl.find('.comment-body p')
 		     .html(comment.get('text'));
 		 $commentEl.find('.comment-type')

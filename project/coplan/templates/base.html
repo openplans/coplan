@@ -1,3 +1,5 @@
+{% load url from future %}
+
 <!DOCTYPE html>
 <!--[if lt IE 7 ]> <html dir="ltr" lang="en-US" class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html dir="ltr" lang="en-US" class="ie7"> <![endif]-->
@@ -46,8 +48,10 @@
           <nav id="user-menu" role="article">
             <ul>
 	      {% if user.is_authenticated %}
-              <li>Hi, {{ user.username }}. <a href="{% url logout %}?next={{ request.build_absolute_uri }}" class="logout">Sign Out</a></li>
-              <li><a href="#">My Plans</a></li>
+              <li>Hi, {{ user.username }}. <a href="{% url 'logout' %}?next={{ request.build_absolute_uri }}" class="logout">Sign Out</a></li>
+              <li><a href="{% url 'user_profile' user.pk %}">My Plans</a></li>
+	      {% else %}
+	      <li><a href="{% url 'socialauth_begin' 'twitter' %}?next={{ request.get_full_path }}">Sign In</a></li>
 	      {% endif %}
             </ul>
           </nav>

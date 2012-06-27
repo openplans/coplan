@@ -7,7 +7,8 @@ urlpatterns = patterns(
 
     url(r'^$', views.homepage, name='home'),
     url(r'^plans/$', views.new_plan, name='new_plan'),
-    url(r'^plans/(?P<pk>\d+)$', views.edit_plan, name='edit_plan'),
+    url(r'^plans/(?P<pk>\d+)/$', views.edit_plan, name='edit_plan'),
+    url(r'^users/(?P<pk>\d+)/profile/$', views.user_profile, name='user_profile'),
 
     url(r'^api/', 
         include('djangorestframework.urls', namespace='djangorestframework')),

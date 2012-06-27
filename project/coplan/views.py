@@ -1,5 +1,6 @@
 import json
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import models as auth_models
 from django.core.serializers.json import DateTimeAwareJSONEncoder
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -25,3 +26,10 @@ def edit_plan(request, pk):
                                 cls=DateTimeAwareJSONEncoder)
     })
     return render_to_response('plan_detail.html', context_instance=context)
+
+def user_profile(request, pk):
+    owner = get_object_or_404(auth_models.User, pk=pk)
+    context = RequestContext(request, {
+        'owner': owner
+    })
+    return render_to_response('user_profile.html', context_instance=context)
