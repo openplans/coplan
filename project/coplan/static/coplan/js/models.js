@@ -13,6 +13,7 @@ var Coplan = Coplan || {};
 		 } else {
 		     this.comments = new C.PlanComments([]);
 		 }
+		 this.comments.plan = this;
 
 		 // The comments base URL should be relative to the plan's URL;
 		 // make it so.
@@ -25,6 +26,7 @@ var Coplan = Coplan || {};
 		 } else {
 		     this.links = new C.PlanLinks([]);
 		 }
+		 this.links.plan = this;
 
 		 this.links.url = function() {
 		     return self.url() + '/links/';

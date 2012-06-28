@@ -142,17 +142,36 @@ var Coplan = Coplan || {};
 
 	     onSubmitNewLink: function() {
 		 var links = this.collection;
-		 var link = links.create(
-		     {
-			 url: $('#id_link-url').val()
-		     }, 
+		 var self = this;
 
-		     {
-			 // Wait for success from the server; we need a full 
-			 // link instance before we render.
-			 wait: true,
-			 success: this.clearNewLinkFields
-		     });
+		 // Defer the actual saving to this function, since we don't yet
+		 // know whether we'll save the link immediately, or whether we'll
+		 // have to save the plan first.
+		 var saveLink = function() {
+		     links.create(
+			 {
+			     url: $('#id_link-url').val()
+			 }, 
+
+			 {
+			     // Wait for success from the server; we need a full 
+			     // link instance before we render.
+			     wait: true,
+			     success: self.clearNewLinkFields
+			 });
+		 };
+
+		 if (links.plan.isNew()) {
+		     links.plan.save(
+			 {},
+
+			 {
+			     wait: true,
+			     success: saveLink
+			 });
+		 } else {
+		     saveLink();
+		 }
 	     },
 
 	     onDeleteLink: function(evt) {
