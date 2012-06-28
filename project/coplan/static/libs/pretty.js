@@ -10,6 +10,7 @@ function prettyDate(time){
     
     var date = new Date((time || "")
 			.replace(/-/g,"/")
+			.replace(/Z$/, "+00:00")
 			.replace(/[TZ]/g," ")),
     diff = (((new Date()).getTime() - date.getTime()) / 1000),
     day_diff = Math.floor(diff / 86400);
