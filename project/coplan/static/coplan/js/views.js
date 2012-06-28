@@ -122,12 +122,14 @@ var Coplan = Coplan || {};
 		 var links = this.collection;
 		 links.on("reset", this.render, this);
 		 links.on("add", this.addLink, this);
+		 links.on("remove", this.render, this);
 	     },
 
 	     events: {
 		 'click #id_link-submit': 'onSubmitNewLink',
 		 'keyup #id_link-url': 'onLinkTextChange',
-		 'change #id_link-url': 'onLinkTextChange'
+		 'change #id_link-url': 'onLinkTextChange',
+		 'click .link-remove': 'onDeleteLink'
 	     },
 
 	     onLinkTextChange: function() {
@@ -153,6 +155,13 @@ var Coplan = Coplan || {};
 		     });
 	     },
 
+	     onDeleteLink: function(evt) {
+		 var $btn = $(evt.currentTarget);
+		 var id = $btn.parent().find('input[name="link-id"]').val();
+		 var link = this.collection.get(id);
+		 link.destroy();
+	     },
+
 	     clearNewLinkFields: function() {
 		 $('#id_link-url').val('').change();
 	     },
@@ -166,12 +175,19 @@ var Coplan = Coplan || {};
 		 $linkEl.find('a')
 		     .html(link.get('url'))
 		     .attr('href', link.get('url'));
+		 $linkEl.find('input[name="link-id"]')
+		     .attr('value', link.id);
 		 $linkEl.removeClass('hidden');
 
 		 $('ul.links-list').append($linkEl);
 	     },
 
 	     render: function() {
+		 // Clear the list of everything but the template.
+		 var $template = $('#link-template').clone();
+		 $('ul.links-list').empty().append($template);
+
+		 // Add in each of the links.
 		 this.collection.forEach(this.addLink);
 	     }
 	 });

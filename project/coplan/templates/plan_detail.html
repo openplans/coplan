@@ -73,6 +73,10 @@
     <ul class="links-list">
       <li class="resource-link hidden" id="link-template">
 	<a href="#">The link title</a>
+	<input type="hidden" name="link-id" value="...">
+	{% if not plan.id or user == plan.owner %}
+	<button class="link-remove">-</button>
+	{% endif %}
       </li>
       <li>
 	(There are no supporting links yet)
@@ -105,6 +109,7 @@
   </ol>
 
   <div class="comments-list">
+    {% if user.is_authenticated %}
       <div class="comment-commenter">
 	<img class="avatar" src="http://placehold.it/40" />
       </div>
@@ -127,6 +132,10 @@
 	  <button id="id_comment-submit" disabled="disabled">Submit</button>
 	</div>
       </div>
+    {% else %}
+      (You must be <a href="{% url 'socialauth_begin' 'twitter' %}?next={{ request.get_full_path }}">logged in</a> 
+      to comment.)
+    {% endif %}
   </div>
 </div>
 
