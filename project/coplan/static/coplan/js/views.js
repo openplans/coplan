@@ -8,9 +8,12 @@ var Coplan = Coplan || {};
 
 	     initialize: function() {
 		 this.commentsListView = new C.CommentsListView(
-		     {collection: this.model.comments}
-		 );
+		     {collection: this.model.comments});
 		 this.commentsListView.render();
+
+		 this.linksListView = new C.LinksListView(
+		     {collection: this.model.links});
+		 this.linksListView.render();
 	     },
 
 	     events: {
@@ -109,6 +112,67 @@ var Coplan = Coplan || {};
 
 	     render: function() {
 		 this.collection.forEach(this.addComment);
+	     }
+	 });
+     C.LinksListView = Backbone.View.extend(
+	 {
+	     el: $('#plan-supporting-documents'),
+
+	     initialize: function() {
+		 var links = this.collection;
+		 links.on("reset", this.render, this);
+		 links.on("add", this.addLink, this);
+	     },
+
+	     events: {
+		 'click #id_link-submit': 'onSubmitNewLink',
+		 'keyup #id_link-url': 'onLinkTextChange',
+		 'change #id_link-url': 'onLinkTextChange'
+	     },
+
+	     onLinkTextChange: function() {
+		 if ($('#id_link-url').val().trim() === '') {
+		     $('#id_link-submit').attr('disabled', 'disabled');
+		 } else {
+		     $('#id_link-submit').removeAttr('disabled');
+		 }		     
+	     },
+
+	     onSubmitNewLink: function() {
+		 var links = this.collection;
+		 var link = links.create(
+		     {
+			 url: $('#id_link-url').val()
+		     }, 
+
+		     {
+			 // Wait for success from the server; we need a full 
+			 // link instance before we render.
+			 wait: true,
+			 success: this.clearNewLinkFields
+		     });
+	     },
+
+	     clearNewLinkFields: function() {
+		 $('#id_link-url').val('').change();
+	     },
+
+	     addLink: function(link) {
+		 /*
+		  * TODO: This should be in an actual template and not a 
+		  * cloned element.
+		  */
+		 var $linkEl = $('#link-template').clone();
+		 $linkEl.find('a')
+		     .html(link.get('url'))
+		     .attr('href', link.get('url'));
+		 $linkEl.removeClass('hidden');
+
+		 $('ul.links-list').append($linkEl);
+	     },
+
+	     render: function() {
+		 this.collection.forEach(this.addLink);
 	     }
 	 });
 
