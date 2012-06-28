@@ -410,6 +410,19 @@ a.show-more:hover {
   padding: 0px;
 }
 
+.comment-author .avatar {
+  float: left;
+}
+
+.comment-author-info,
+.comment-meta,
+.comment-body {
+  margin-left: 50px;
+}
+
+.comment-meta {
+  font-size: 0.8em;
+}
 
 
 /* =Support

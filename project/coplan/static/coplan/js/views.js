@@ -102,7 +102,7 @@ var Coplan = Coplan || {};
 		 $commentEl.find('.comment-type')
 		     .html(commentTypes[comment.get('type')]);
 		 $commentEl.find('time')
-		     .html(comment.get('created_datetime'));
+		     .html(prettyDate(comment.get('created_datetime')));
 		 $commentEl.find('time')
 		     .attr('datetime', comment.get('created_datetime'));
 		 $commentEl.removeClass('hidden');
