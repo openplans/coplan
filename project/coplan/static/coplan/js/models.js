@@ -8,26 +8,16 @@ var Coplan = Coplan || {};
 	     initialize: function(attributes) {
 		 var self = this;
 
-		 if ('comments' in attributes) {
-		     this.comments = new C.PlanComments(attributes.comments);
-		 } else {
-		     this.comments = new C.PlanComments([]);
-		 }
+		 this.comments = new C.PlanComments(attributes.comments || []);
 		 this.comments.plan = this;
-
 		 // The comments base URL should be relative to the plan's URL;
 		 // make it so.
 		 this.comments.url = function() {
 		     return self.url() + '/comments/';
 		 };
 
-		 if ('links' in attributes) {
-		     this.links = new C.PlanLinks(attributes.links);
-		 } else {
-		     this.links = new C.PlanLinks([]);
-		 }
+		 this.links = new C.PlanLinks(attributes.links || []);
 		 this.links.plan = this;
-
 		 this.links.url = function() {
 		     return self.url() + '/links/';
 		 };
