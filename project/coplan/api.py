@@ -37,3 +37,12 @@ class PlanCommentListView (views.ListOrCreateModelView):
 class PlanCommentInstanceView (ModelInstanceMixin, views.InstanceModelView):
     resource = resources.PlanCommentResource
     permissions = [permissions.IsCommenterOrReadOnly]
+
+
+class PlanLinkListView (views.ListOrCreateModelView):
+    resource = resources.PlanLinkResource
+
+    
+class PlanLinkInstanceView (ModelInstanceMixin, views.InstanceModelView):
+    resource = resources.PlanLinkResource
+    permissions = [permissions.IsPlanOwnerOrReadOnly]

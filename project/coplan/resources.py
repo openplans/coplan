@@ -17,12 +17,20 @@ class PlanCommentResource (resources.ModelResource):
                 }
 
 
+class PlanLinkResource (resources.ModelResource):
+    model = models.Link
+    form = forms.PlanLinkForm
+    exclude = ['plan']
+
+
 class PlanResource (resources.ModelResource):
     model = models.Plan
 
     # By default, id is excluded.  Override exclude to be empty.
     exclude = []
-    include = [('comments', PlanCommentResource)]
+    include = [('comments', PlanCommentResource),
+               ('links', PlanLinkResource),
+               ]
 
     def owner(self, plan):
         return plan.owner.pk

@@ -43,6 +43,10 @@ class IsOwnerOrReadOnly (IsInstanceUserOrReadOnly):
     model = models.Plan
     user_attr = 'owner'
 
+class IsPlanOwnerOrReadOnly (IsInstanceUserOrReadOnly):
+    model = models.Link
+    user_attr = ('plan', 'owner')
+    
 
 class IsCommenterOrReadOnly (IsInstanceUserOrReadOnly):
     model = models.Comment

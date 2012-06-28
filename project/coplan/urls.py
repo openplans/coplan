@@ -20,5 +20,9 @@ urlpatterns = patterns(
         api.PlanCommentListView.as_view(), name='plan_comment_list'),
     url('^api/v1/plans/(?P<plan_id>\d+)/comments/(?P<pk>\d+)$', 
         api.PlanCommentInstanceView.as_view(), name='plan_comment_instance'),
-
+    url('^api/v1/plans/(?P<plan_id>\d+)/links/$', 
+        api.PlanLinkListView.as_view(), name='plan_link_list'),
+    url('^api/v1/plans/(?P<plan_id>\d+)/links/(?P<pk>\d+)$', 
+        api.PlanLinkInstanceView.as_view(), name='plan_link_instance'),
+        
 )

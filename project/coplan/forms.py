@@ -9,3 +9,12 @@ class PlanCommentForm (forms.ModelForm):
     class Meta:
         model = models.Comment
         exclude = ['plan', 'commenter']
+
+
+class PlanLinkForm (forms.ModelForm):
+    """
+    The form used to validate links.  The plan is implicit from the view.
+    """
+    class Meta:
+        model = models.Link
+        exclude = ['plan']
