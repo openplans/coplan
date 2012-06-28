@@ -8,19 +8,31 @@ class IsInstanceUserOrReadOnly (permissions.BasePermission):
     """The Model class that the instance belongs to"""
 
     user_attr = None
-    """The name of the user attribute"""
-    
+    """The name of the user attribute to get from self.get_instance().
+    If it's a tuple, we do a chain of getattrs
+    and the user is the last object returned.
+    """
+
     def check_permission(self, user):
         view = self.view
-        
+        if view.method in ('GET', 'HEAD'):
+            return
         try:
             inst = view.get_instance()
-            if view.method not in ('GET', 'HEAD') and \
-              getattr(inst, self.user_attr) != user:
+
+            if isinstance(self.user_attr, basestring):
+                names = [self.user_attr]
+            else:
+                names = self.user_attr
+            assert names, "user attr not specified"
+            for name in names:
+                inst = getattr(inst, name)
+                
+            if inst != user:
                 raise ErrorResponse(
                     status.HTTP_403_FORBIDDEN,
                     {'detail': ('Only the {0} of a {1} may make '
-                    'modifications.').format(self.user_attr,
+                    'modifications.').format(' '.join(self.user_attr),
                                              self.model._meta.verbose_name)})
 
         except self.model.DoesNotExist:
