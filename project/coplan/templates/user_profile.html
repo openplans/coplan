@@ -12,7 +12,7 @@
 
   <ul>
     {% for plan in owner.owned_plans.all %}
-    <li><a href="{% url 'edit_plan' plan.pk %}">{{ plan.title }}</a></li>
+    <li><a href="{% url 'edit_plan' plan.pk %}">{{ plan.title|default:"(no title)" }}</a></li>
     {% endfor %}
   </ul>
 
