@@ -4,17 +4,21 @@ from . import forms
 from . import models
 
 
+def simple_user(user):
+    """Return a minimal representation of an auth.User"""
+    return {
+        'id': user.pk,
+        'name': user.username,
+        'profile_url': reverse('user_profile', args=(user.pk,)),
+    }
+
 class PlanCommentResource (resources.ModelResource):
     model = models.Comment
     form = forms.PlanCommentForm
     exclude = ['plan']
 
     def commenter(self, comment):
-        return {'id': comment.commenter.pk,
-                'name': comment.commenter.username,
-                'profile_url': reverse('user_profile', 
-                                       args=(comment.commenter.pk,)),
-                }
+        return simple_user(comment.commenter)
 
 
 class PlanLinkResource (resources.ModelResource):
@@ -22,15 +26,26 @@ class PlanLinkResource (resources.ModelResource):
     form = forms.PlanLinkForm
     exclude = ['plan']
 
+    
+class PlanSupportResource (resources.ModelResource):
+    model = models.Support
+    form = forms.PlanSupportForm
+    exclude = ['plan']
 
+    def supporter(self, support):
+        return simple_user(support.supporter)
+    
+    
 class PlanResource (resources.ModelResource):
     model = models.Plan
 
     # By default, id is excluded.  Override exclude to be empty.
-    exclude = []
+    exclude = ['supporters']
     include = [('comments', PlanCommentResource),
                ('links', PlanLinkResource),
+               ('support', PlanSupportResource),
                ]
 
     def owner(self, plan):
         return plan.owner.pk
+

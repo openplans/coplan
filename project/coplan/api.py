@@ -1,4 +1,6 @@
-from djangorestframework import views, mixins
+from django.db import IntegrityError
+from djangorestframework import views, mixins, status
+from djangorestframework.response import ErrorResponse
 from . import permissions
 from . import resources
 
@@ -37,6 +39,31 @@ class PlanCommentListView (views.ListOrCreateModelView):
 class PlanCommentInstanceView (ModelInstanceMixin, views.InstanceModelView):
     resource = resources.PlanCommentResource
     permissions = [permissions.IsCommenterOrReadOnly]
+
+
+class PlanSupportListView (views.ListOrCreateModelView):
+    resource = resources.PlanSupportResource
+
+    def get_instance_data(self, model, content, **kwargs):
+        """Get the supporting user as the one that is logged in."""
+        data = super(PlanSupportListView, self)\
+          .get_instance_data(model, content, **kwargs)
+        data['supporter_id'] = self.request.user.pk
+        return data
+
+    def post(self, request, *args, **kwargs):
+        # Users should only be able to support a plan once, and this is enforced
+        # by the ORM/DB.  Gracefully handle the integrity error.
+        try:
+            return super(PlanSupportListView, self).post(request, *args, **kwargs)
+        except IntegrityError:
+            raise ErrorResponse(status.HTTP_409_CONFLICT,
+                                {'detail': ('User has already supported '
+                                'that plan.')})
+
+class PlanSupportInstanceView (ModelInstanceMixin, views.InstanceModelView):
+    resource = resources.PlanSupportResource
+    permissions = [permissions.IsSupporterOrReadOnly]
 
 
 class PlanLinkListView (views.ListOrCreateModelView):

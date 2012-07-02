@@ -52,4 +52,9 @@ class IsCommenterOrReadOnly (IsInstanceUserOrReadOnly):
     model = models.Comment
     user_attr = 'commenter'
 
+    
+class IsSupporterOrReadOnly (IsInstanceUserOrReadOnly):
+    model = models.Support
+    user_attr = 'supporter'
+
 

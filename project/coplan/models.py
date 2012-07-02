@@ -15,9 +15,24 @@ class Plan (models.Model):
 
     supporters = models.ManyToManyField('auth.User', 
                                         related_name='supported_plans',
+                                        through='coplan.Support',
                                         blank=True)
 
 
+class Support (models.Model):
+    MOTIVATION_CHOICES = (
+        ('I live here', 'I live here'),
+        ('I work here', 'I work here'),
+        ('I play here', 'I play here'))
+    supporter = models.ForeignKey('auth.User', related_name='support')
+    plan = models.ForeignKey('coplan.Plan', related_name='support')
+    motivation = models.CharField(max_length=140, choices=MOTIVATION_CHOICES,
+                                  help_text='What is your connection to the area?')
+
+    class Meta:
+        unique_together = [('supporter', 'plan'),]
+
+    
 class Link (models.Model):
     plan = models.ForeignKey('coplan.Plan', related_name='links')
     url = models.URLField()

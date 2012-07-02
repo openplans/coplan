@@ -139,6 +139,16 @@
       to comment.)
     {% endif %}
   </div>
+
+  <div class="support-section">
+    {% if plan.supporters.all %}
+    <h3>{{ plan.supporters.all|length }} citizens support this plan</h3>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <button class="support-button">Show your support</button>
+    {% endif %}
+  </div>
 </div>
 
 <script>

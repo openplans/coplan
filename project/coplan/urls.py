@@ -24,5 +24,9 @@ urlpatterns = patterns(
         api.PlanLinkListView.as_view(), name='plan_link_list'),
     url('^api/v1/plans/(?P<plan_id>\d+)/links/(?P<pk>\d+)$', 
         api.PlanLinkInstanceView.as_view(), name='plan_link_instance'),
+    url('^api/v1/plans/(?P<plan_id>\d+)/support/$', 
+        api.PlanSupportListView.as_view(), name='plan_support_list'),
+    url('^api/v1/plans/(?P<plan_id>\d+)/support/(?P<pk>\d+)$', 
+        api.PlanSupportInstanceView.as_view(), name='plan_support_instance'),
         
 )
