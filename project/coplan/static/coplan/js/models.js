@@ -1,6 +1,20 @@
 var Coplan = Coplan || {};
 
 (function($, C) {
+     var getValue = function(object, prop) {
+	 if (!(object && object[prop])) return null;
+	 return _.isFunction(object[prop]) ? object[prop]() : object[prop];
+     };
+ 
+     Backbone.Model.prototype.url = function() {
+	 var base = getValue(this, 'urlRoot') 
+	     || getValue(this.collection, 'url') 
+	     || urlError();
+	 if (this.isNew()) return base;
+
+	 return base + (base.charAt(base.length - 1) == '/' ? '' : '/') 
+	     + encodeURIComponent(this.id) + '/';
+     };
      
      C.Plan = Backbone.Model.extend(
 	 {
@@ -13,17 +27,18 @@ var Coplan = Coplan || {};
 		 // The comments base URL should be relative to the plan's URL;
 		 // make it so.
 		 this.comments.url = function() {
-		     return self.url() + '/comments/';
+		     return self.url() + 'comments/';
 		 };
 
 		 this.links = new C.PlanLinks(attributes.links || []);
 		 this.links.plan = this;
 		 this.links.url = function() {
-		     return self.url() + '/links/';
+		     return self.url() + 'links/';
 		 };
 
 
 	     },
+
 	     sync: function(method, plan, options) {
 		 if (method == 'update' || method == 'create') {
 		     var data = plan.attributes;
