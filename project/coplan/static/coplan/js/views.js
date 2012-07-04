@@ -14,6 +14,17 @@ var Coplan = Coplan || {};
 		 this.linksListView = new C.LinksListView(
 		     {collection: this.model.links});
 		 this.linksListView.render();
+
+		 this.supportListView = new C.SupportListView(
+		     {collection: this.model.support});
+		 this.supportListView.render();
+
+		 this.currentUserSupportView = new C.CurrentUserSupportView(
+		     {model: {
+			  support: this.model.support,
+			  currentUserSupport: this.model.currentUserSupport}
+		     });
+		 this.currentUserSupportView.render();
 	     },
 
 	     events: {
@@ -112,6 +123,126 @@ var Coplan = Coplan || {};
 
 	     render: function() {
 		 this.collection.forEach(this.addComment);
+	     }
+	 });
+     C.CurrentUserSupportView = Backbone.View.extend(
+	 {
+	     el: '#current-user-support',
+
+	     initialize: function() {
+		 this.model.currentUserSupport.on('change', this.render, this);
+		 this.model.support.on('remove', this.recreateModel, this);
+	     },
+
+	     events: {
+		 'click #id_support-submit': 'onSubmitSupport',
+		 'click #id_unsupport-submit': 'onSubmitUnsupport',
+		 'change #id_support-motivation': 'onMotivationChange'
+	     },
+
+	     onMotivationChange: function() {
+		 if ($('#id_support-motivation option:selected').val() === '') {
+		     $('#id_support-submit').attr('disabled', 'disabled');
+		 } else {
+		     $('#id_support-submit').removeAttr('disabled');
+		 }
+	     },
+
+	     onSubmitSupport: function() {
+		 this.model.currentUserSupport.save(
+		     {
+			 motivation: $('#id_support-motivation option:selected')
+			     .val()
+		     }, {wait: true});
+	     },
+
+	     onSubmitUnsupport: function() {
+		 this.model.currentUserSupport.destroy();
+	     },
+
+	     recreateModel: function() {
+		 var current = new C.PlanSupport({});
+		 this.model.currentUserSupport = current;
+		 this.model.support.add(current);
+		 this.initialize();
+		 this.render();
+	     },
+
+	     updateSupportForm: function() {
+		 if (!this.model.currentUserSupport.isNew()) {
+		     $('#current-user-support .action')
+			 .html('support this plan.')
+			 .append('<button id="id_unsupport-submit">' +
+				'Unsupport</button>');
+		 } else {
+		     $('#current-user-support .action')
+			 .html('<button id="id_support-submit">' +
+			       'support this plan</button>.');
+		 }
+	     },
+
+	     render: function() {
+		 $('#id_support-motivation').val(
+		   this.model.currentUserSupport.get('motivation')).change();
+		 this.updateSupportForm();
+	     }
+
+	 });
+     C.SupportListView = Backbone.View.extend(
+	 {
+	     el: $('#support'),
+
+	     initialize: function() {
+		 var support = this.collection;
+		 support.on("reset", this.render, this);
+		 support.on("change", this.updateSupport, this);
+		 support.on("add", this.addSupport, this);
+		 support.on("remove", this.removeSupport, this);
+	     },
+
+	     addSupport: function(support) {
+		 return this.updateSupport(support);
+	     },
+
+	     updateSupport: function(support) {
+		 if (support.isNew()) {
+		     return;
+		 }
+
+		 /* Clone the support "template" element, and manually
+		  * fill in the value.
+		  * 
+		  * TODO: This would be much cleaner with a js template.
+		  * Underscore templates are available, but I like mustache
+		  * or handlebars better.
+		  */
+		 var $supportEl = $('#support-' + support.get('id'));
+
+		 if ($supportEl.length === 0) {
+		     $supportEl = $('#support-template').clone().
+			 removeClass('hidden').
+			 appendTo('ul.support-list');
+		 }
+
+		 $supportEl.attr('id', 'support-' + support.get('id'));
+		 $supportEl.find('.supporter a')
+		     .html(support.get('supporter')['name'])
+		     .attr('href', support.get('supporter')['profile_url']);
+		 $supportEl.find('.support-motivation')
+		     .html('&quot;' + support.get('motivation') + '&quot;');
+		 $supportEl.removeClass('hidden');
+	     },
+
+	     removeSupport: function(support) {
+		 $('#support-' + support.get('id')).remove();
+	     },
+
+	     render: function() {
+		 // Clear the list of everything but the template.
+		 var $template = $('#support-template').clone();
+		 $('ul.support-list').empty().append($template);
+
+		 this.collection.forEach(this.addSupport, this);
 	     }
 	 });
      C.LinksListView = Backbone.View.extend(

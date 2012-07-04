@@ -36,7 +36,21 @@ var Coplan = Coplan || {};
 		     return self.url() + 'links/';
 		 };
 
+		 this.support = new C.PlanSupports(attributes.support || []);
+		 this.support.plan = this;
+		 this.support.url = function() {
+		     return self.url() + 'support/';
+		 };
 
+		 this.currentUserSupport = this.support.find(
+		     function(support) {
+			 return (support.get('supporter').id ===
+				 C.currentUserId);
+		     });
+		 if (this.currentUserSupport === undefined) {
+		     this.currentUserSupport = new C.PlanSupport({});
+		     this.support.add(this.currentUserSupport);
+		 }
 	     },
 
 	     sync: function(method, plan, options) {
@@ -76,6 +90,12 @@ var Coplan = Coplan || {};
      C.PlanLinks = Backbone.Collection.extend(
          {
 	     model: C.PlanLink
+	 });
+
+     C.PlanSupport = Backbone.Model.extend({});
+     C.PlanSupports = Backbone.Collection.extend(
+	 {
+	     model: C.PlanSupport
 	 });
 
  })(jQuery, Coplan);

@@ -156,7 +156,8 @@ button {width: auto; overflow: visible;}
 #plan-description,
 #plan-info,
 #discussion,
-#support {
+#support,
+#supporters {
   margin-bottom: 2em;
 }
 
@@ -424,7 +425,6 @@ a.show-more:hover {
   font-size: 0.8em;
 }
 
-
 /* =Support
 -------------------------------------------------------------- */
 .support-list {
@@ -446,7 +446,8 @@ a.show-more:hover {
 @media only screen and (min-width: 768px) {
   #plan-description,
   #discussion,
-  #support {
+  #support,
+  #supporters {
     float: left;
     width: 60%;
   }
