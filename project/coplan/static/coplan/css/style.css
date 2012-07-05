@@ -434,6 +434,53 @@ a.show-more:hover {
 .support-list li {
 }
 
+/* =Splash page
+-------------------------------------------------------------- */
+.splash {
+  background-color: #333;
+  margin: -2em;
+  padding-top: 3em;
+}
+
+.explanation-step {
+  width: 32%;
+  float: left;
+  color: white;
+  margin-left: 2%;
+}
+
+.explanation-step:first-child {
+  margin-left: 0px;
+}
+
+.step-icon {
+  display: table-cell;
+  width: 60px;
+}
+
+.step-text {
+  display: table-cell;
+  padding-left: 1em;
+  vertical-align: top;
+}
+
+.splash-actions {
+  clear: both;
+  text-align: center;
+}
+
+.splash-actions a {
+  display: inline-block;
+  border: 2px solid white;
+  background-color: #00B1D5;
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 1em;
+  margin: 1em;
+}
+
 /* =Media Queries for Responsive Layout
 -------------------------------------------------------------- */
 

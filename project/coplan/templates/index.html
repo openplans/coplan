@@ -1,9 +1,49 @@
 {% extends "base.html" %}
 {% load url from future %}
 
-{% block content %}
-<div>
-  <a href="{% url 'new_plan' %}">Create a new plan</a>
+{% block content_wrapper %}
+<div class="splash">
+
+  <div class="container clearfix">
+    <div class="explanation-step step1">
+      <div class="step-icon">
+	<img src="{{ STATIC_URL }}coplan/img/idea.png"
+	     title="&quot;Idea&quot; symbol  by The Noun Project, from thenounproject.com collection">
+      </div>
+      <div class="step-text">
+	<h2>Share your idea</h2>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+	  eiusmod tempor incididunt ut labore et dolore</p>
+      </div>
+    </div>
+    <div class="explanation-step step2">
+      <div class="step-icon">
+	<img src="{{ STATIC_URL }}coplan/img/discussion.png"
+	     title="&quot;Community&quot; symbol by The Noun Project, from thenounproject.com collection">
+      </div>
+      <div class="step-text">
+	<h2>Get feedback</h2>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+	  eiusmod tempor incididunt ut labore et dolore</p>
+      </div>
+    </div>
+    <div class="explanation-step step3">
+      <div class="step-icon">
+	<img src="{{ STATIC_URL }}coplan/img/support.png"
+	     title="&quot;Like&quot; symbol by Marwa Boukarim, from thenounproject.com collection">
+      </div>
+      <div class="step-text">
+	<h2>Gather Support</h2>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+	  eiusmod tempor incididunt ut labore et dolore</p>
+      </div>
+    </div>
+    
+    <div class="splash-actions">
+      <a href="{% url 'new_plan' %}">Create a new plan</a>
+    </div>
+  </div>
+
 </div>
 {% endblock %}
 

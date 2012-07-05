@@ -59,12 +59,14 @@
 	</div>
       </header><!-- #branding -->
       
+      {% block content_wrapper %}
       <div id="content" class="container clearfix">
 	
 	{% block content %}
 	{% endblock content %}
 	
       </div><!-- #content -->
+      {% endblock content_wrapper %}
       
     </div><!-- #page -->    
   </body>
