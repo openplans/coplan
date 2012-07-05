@@ -12,7 +12,7 @@
 
     <div class="plan-overview">
       <div class="field plan-title">
-	{% if not plan.id or user == plan.owner %}
+	{% if not plan.id or planner == plan.owner %}
 	<input name="title" id="id_title" value="{{ plan.title }}" 
 	       placeholder="Plan Title">
 	{% else %}
@@ -22,7 +22,7 @@
 
       <div class="plan-sub-overview">
 	<div class="plan-owner">
-	  {% if not plan.id or user == plan.owner %}
+	  {% if not plan.id or planner == plan.owner %}
 	  <img class="avatar" src="{{ planner.avatar_url }}" />
 	  {% else %}
 	  <img class="avatar" src="{{ plan.owner.avatar_url }}"/>
@@ -30,7 +30,7 @@
 	</div> <!-- plan-owner -->
 	
 	<div class="field plan-motivation">
-	  {% if not plan.id or user == plan.owner %}
+	  {% if not plan.id or planner == plan.owner %}
 	  <div class="plan-motivation-label">
 	    I am making this plan because:
 	  </div>
@@ -50,7 +50,7 @@
     <div class="field plan-details">
       <h2>Plan Details</h2>
 
-      {% if not plan.id or user == plan.owner %}
+      {% if not plan.id or planner == plan.owner %}
       <textarea name="details" id="id_details" 
 		placeholder="The plan details...">{{ plan.details }}</textarea>
       {% else %}
@@ -69,7 +69,7 @@
   <div id="plan-supporting-documents">
     <h3>Supporting Documents</h3>
     
-    {% if not plan.id or user == plan.owner %}
+    {% if not plan.id or planner == plan.owner %}
     <div id="supporting-documents-form">
       <label for="">Link:</label>
       <input type="text" name="link-url" id="id_link-url" placeholder="http://">
@@ -80,7 +80,7 @@
       <li class="resource-link hidden" id="link-template">
 	<a href="#">The link title</a>
 	<input type="hidden" name="link-id" value="...">
-	{% if not plan.id or user == plan.owner %}
+	{% if not plan.id or planner == plan.owner %}
 	<button class="link-remove">-</button>
 	{% endif %}
       </li>
@@ -123,7 +123,7 @@
       </div>
       <div class="comment-content">
 	<div class="comment-overview">
-	  <a href="{% url 'user_profile' user.pk %}">{{ user.username }}</a>
+	  <a href="{% url 'user_profile' planner.pk %}">{{ planner.username }}</a>
 	  <select id="id_comment-type">
 	    <option value="1">likes</option>
 	    <option value="-1">dislikes</option>
@@ -182,7 +182,7 @@
       </select> and I 
       
       <span class="action">
-	{% if user in plan.supporters.all %}
+	{% if planner in plan.supporters.all %}
 	support this plan.
 	{% else %}
 	<button class="support-button" id="id_support-submit" type="button">Support this plan</button>
@@ -202,13 +202,13 @@
   {% if plan_data %}
   var planData = {{ plan_data|safe }};
   {% else %}
-  var planData = {owner: {{ user.pk|default:"-1" }} };
+  var planData = {owner: {{ planner.pk|default:"-1" }} };
   {% endif %}
 
   var Coplan = Coplan || {};
   Coplan.planUrlRoot = '{% url "plan_list" %}';
   {% if user.is_authenticated %}
-  Coplan.currentUserId = {{ user.pk }};
+  Coplan.currentUserId = {{ planner.pk }};
   {% endif %}
 </script>
 
