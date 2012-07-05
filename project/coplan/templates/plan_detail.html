@@ -54,7 +54,7 @@
       <textarea name="details" id="id_details" 
 		placeholder="The plan details...">{{ plan.details }}</textarea>
       {% else %}
-      <div id="id_details">{{ plan.details }}</div>
+      <div id="id_details">{{ plan.details|linebreaks }}</div>
       {% endif %}
     </div>
 
