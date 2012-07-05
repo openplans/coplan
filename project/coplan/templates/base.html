@@ -45,7 +45,7 @@
       
       <header id="branding" role="banner" class="clearfix">
 	<div class="container">
-          <h1 id="site-title"><span><a href="#" title="CoPlan" rel="home">CoPlan</a></span></h1>
+          <h1 id="site-title"><span><a href="{% url 'home' %}" title="CoPlan" rel="home">CoPlan</a></span></h1>
           <nav id="user-menu" role="article">
             <ul>
 	      {% if user.is_authenticated %}
