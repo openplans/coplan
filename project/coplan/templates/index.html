@@ -45,5 +45,17 @@
   </div>
 
 </div>
+
+<div class="container clearfix">
+  <h2>Featured plans</h2>
+  {% for plan in featured_plans %}
+  <div class="featured-plan">
+    <a href="{% url 'edit_plan' plan.pk %}">
+      {{ plan.title|default:'(No title yet)' }}</a>
+    <p>{{ plan.owner.username }} made this plan because 
+      &quot;{{ plan.motivation }}&quot;</p>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
 

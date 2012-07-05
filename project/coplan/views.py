@@ -8,7 +8,12 @@ from . import models
 from . import resources
 
 def homepage(request):
-    context = RequestContext(request, {})
+    featured_plans = [models.Plan.objects.get(pk=30), 
+                      models.Plan.objects.get(pk=25),
+                      models.Plan.objects.get(pk=40)]
+    context = RequestContext(request, {
+        'featured_plans': featured_plans
+    })
     return render_to_response('index.html', context_instance=context)
 
 @login_required

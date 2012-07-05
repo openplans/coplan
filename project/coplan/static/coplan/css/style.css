@@ -439,6 +439,7 @@ a.show-more:hover {
 .splash {
   background-color: #333;
   margin: -2em;
+  margin-bottom: 2em;
   padding-top: 3em;
 }
 
@@ -479,6 +480,12 @@ a.show-more:hover {
   text-decoration: none;
   padding: 1em;
   margin: 1em;
+}
+
+.featured-plan {
+  float: left;
+  width: 48%;
+  padding: 1%;
 }
 
 /* =Media Queries for Responsive Layout
