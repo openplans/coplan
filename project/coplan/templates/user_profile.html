@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% block head_includes %}
+{% endblock %}
+
+{% block content %}
+
+<div id="plan-listing">
+
+  <h1>Plans belonging to {{ owner.username }}</h1>
+
+  <ul>
+    {% for plan in owner.owned_plans.all %}
+    <li><a href="{% url 'edit_plan' plan.pk %}">{{ plan.title }}</a></li>
+    {% endfor %}
+  </ul>
+
+</div>
+
+{% endblock %}
+
