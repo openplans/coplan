@@ -7,7 +7,6 @@
 // Takes an ISO time and returns a string representing how
 // long ago the date represents.
 function prettyDate(time){
-    
     var date = new Date((time || "")
 			.replace(/-/g,"/")
 			.replace(/Z$/, "+00:00")
