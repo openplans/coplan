@@ -37,7 +37,9 @@
 	  <textarea name="motivation" id="id_motivation" 
 		    placeholder="Why this plan is important to me...">{{ plan.motivation }}</textarea>
 	  {% else %}
+	  <div class="plan-motivation-label">
 	    <a href="{% url 'user_profile' plan.owner.pk %}">{{ plan.owner.username }}</a> made this plan because:
+	  </div>
 	  <div id="id_motivation">{{ plan.motivation }}</div>
 	{% endif %}
 	</div> <!-- plan-motivation -->
