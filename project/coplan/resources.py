@@ -4,12 +4,13 @@ from . import forms
 from . import models
 
 
-def simple_user(user):
+def simple_user(planner):
     """Return a minimal representation of an auth.User"""
     return {
-        'id': user.pk,
-        'name': user.username,
-        'profile_url': reverse('user_profile', args=(user.pk,)),
+        'id': planner.pk,
+        'name': planner.username,
+        'profile_url': reverse('user_profile', args=(planner.pk,)),
+        'avatar_url': planner.avatar_url,
     }
 
 class PlanCommentResource (resources.ModelResource):

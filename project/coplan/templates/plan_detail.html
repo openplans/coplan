@@ -22,7 +22,11 @@
 
       <div class="plan-sub-overview">
 	<div class="plan-owner">
-	  <img class="avatar" src="http://placehold.it/40" />
+	  {% if not plan.id or user == plan.owner %}
+	  <img class="avatar" src="{{ planner.avatar_url }}" />
+	  {% else %}
+	  <img class="avatar" src="{{ plan.owner.avatar_url }}"/>
+	  {% endif %}
 	</div> <!-- plan-owner -->
 	
 	<div class="field plan-motivation">
@@ -113,7 +117,7 @@
   <div class="comments-list">
     {% if user.is_authenticated %}
       <div class="comment-commenter">
-	<img class="avatar" src="http://placehold.it/40" />
+	<img class="avatar" src="{{ planner.avatar_url }}" />
       </div>
       <div class="comment-content">
 	<div class="comment-overview">
@@ -155,7 +159,7 @@
       <li id="support-template" class="hidden support">
 	<header>
       	  <div class="supporter vcard">
-            <img class="avatar" src="http://placehold.it/40" />
+            <img class="avatar" src="{{ STATIC_URL }}coplan/img/user1.png" />
 	    <div class="supporter-info">
       	      <a href="#" rel="author">Andy Cochran</a> supports this plan!
 	      <span class="support-motivation">&quot;I live there&quot;.</span>

@@ -116,6 +116,8 @@ var Coplan = Coplan || {};
 		     .html(prettyDate(comment.get('created_datetime')));
 		 $commentEl.find('time')
 		     .attr('datetime', comment.get('created_datetime'));
+		 $commentEl.find('.avatar')
+		     .attr('src', comment.get('commenter').avatar_url);
 		 $commentEl.removeClass('hidden');
 
 		 $('ol.comments-list').append($commentEl);
